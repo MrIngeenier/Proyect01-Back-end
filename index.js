@@ -20,4 +20,15 @@ app.get('/ping',async(req,res)=>{
     return res.json(result.rows[0])
 });
 
+app.get('/users',async(req,res)=>{
+    try{
+        const result = await pool.query('SELECT * FROM users ORDER BY id ASC, type ASC ');
+        const rows = result.rows;
+        return res.json(rows);
+    }catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Error al obtener los usuarios' });
+      }
+ });
+ 
 console.log('Server on port',3000)
